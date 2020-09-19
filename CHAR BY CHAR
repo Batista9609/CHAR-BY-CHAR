@@ -1,0 +1,302 @@
+using System;
+using System.IO;
+
+namespace cedula
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            for (int i = 0; i < args.Length; i++)
+                foreach (string value in args)
+                {
+                    string Opcion;
+                    string p = Convert.ToString(args[i]);
+
+                    if (File.Exists(p) == true)
+                    {
+                    }
+                    Imput1(p);
+                    ImputN(p);
+
+
+                    do
+                    {
+                        bool continua = true;
+                        while (continua)
+                        {
+
+                            Console.WriteLine("1.-Continuar");
+                            Console.WriteLine("2.-Grabar");
+                            Console.WriteLine("3.-Eliminar");
+                            Console.WriteLine("4.-Listar");
+                            Console.WriteLine("5.-Busqueda");
+                            Console.WriteLine("6.-Editar");
+                            Console.WriteLine("7.-Salir");
+
+                            string menu = Console.ReadLine();
+
+                            switch (menu)
+                            {
+                                case "1":
+                                    ImputN(p);
+                                    break;
+
+                                case "2":
+
+                                    Imput(p);
+
+                                    break;
+
+                                case "3":
+
+                                    Eliminar(p);
+
+                                   
+
+
+                                    break;
+
+                                case "4":
+
+                                    Listado(p);
+                                    break;
+
+                                case "5":
+
+                                    Buscar(p);
+                                    break;
+
+                                case "6":
+                                    Editar(p);
+                                
+                                    break;
+
+                                case "7":
+                                    Environment.Exit(0);
+                                    break;
+
+                                case "8":
+                                    
+                                default:
+                                    continua = false;
+                                    break;
+                            }
+                        }
+
+
+                    }
+                    while (true);
+                       
+                       
+
+                    
+
+                }  
+
+        }
+
+        public static void ImputN(string filepath)
+        {
+            using (StreamWriter file = File.AppendText(filepath))
+
+            {
+                string N, A;
+                int C, E;
+
+                Console.WriteLine("Cedula: ");
+                C = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Nombre: ");
+                N = Console.ReadLine();
+
+                Console.WriteLine("Apeliddo: ");
+                A = Console.ReadLine();
+
+                Console.WriteLine("Edad: ");
+                E = Convert.ToInt32(Console.ReadLine());
+
+
+                file.WriteLine(C + "," + N + "," + A + "," + E);
+
+                file.Close();
+
+            }
+
+
+        }
+
+        public static void Imput(string filepath)
+        {
+            using (StreamWriter file = new StreamWriter(filepath, false))
+
+            {
+                string N, A;
+                int C, E;
+
+                Console.WriteLine("Cedula: ");
+                C = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("Nombre: ");
+                N = Console.ReadLine();
+
+                Console.WriteLine("Apeliddo: ");
+                A = Console.ReadLine();
+
+                Console.WriteLine("Edad: ");
+                E = Convert.ToInt32(Console.ReadLine());
+
+
+                file.WriteLine(C + "," + N + "," + A + "," + E);
+
+                file.Close();
+
+            }
+
+
+        }
+        public static void Imput1 (string filepath)
+        {
+            using (StreamWriter file = new StreamWriter(filepath, false))
+
+            {
+
+                file.WriteLine("Cedula" + "," + "Nombre" + "," + "Apellido" + "," + "Edad");
+
+                file.Close();
+
+            }      
+
+
+        }
+
+
+        public static void Buscar(string filepath)
+        {
+            int counter = 0;
+            string line;
+
+            Console.Write("Buscar contenido en el file: ");
+            var text = Console.ReadLine();
+
+            StreamReader file = new StreamReader(filepath);
+
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains(text))
+                {
+                    Console.WriteLine(line);
+                }
+
+                counter++;
+            }
+
+            
+
+            file.Close();
+
+          
+        }
+
+        public static void Eliminar(string filepath)
+        {
+            int counter = 0;
+            string line, Opcion;
+
+            Console.Write("Buscar contenido en el file: ");
+            var text = Console.ReadLine();
+
+            StreamReader file = new StreamReader(filepath);
+
+            while ((line = file.ReadLine()) != null)
+            {
+               
+
+                    Console.WriteLine(line);
+                    Console.WriteLine("Desea eliminar S/N ");
+                    Opcion = Console.ReadLine();
+
+                    if (Opcion == "S")
+
+                    {
+                        Console.WriteLine("Fue eliminado con exito", text);
+                        File.Delete(line);
+
+                    }
+
+
+                    if (Opcion == "N")
+
+             
+
+                counter++;
+            }
+    
+            
+
+
+
+
+
+            file.Close();
+
+        }
+
+        public static void Editar(string filepath)
+        {
+            int counter = 0;
+            string line, Opcion;
+
+            Console.Write("Buscar contenido en el file: ");
+            var text = Console.ReadLine();
+
+            StreamReader file = new StreamReader(filepath);
+
+            while ((line = file.ReadLine()) != null)
+            {
+               
+
+                    Console.WriteLine(line);
+                    Console.WriteLine("Desea Editar S/N ");
+                    Opcion = Console.ReadLine();
+
+                    if (Opcion == "S")
+
+                    {
+                        ImputN(line);
+                        Console.WriteLine("Fue editado con exito", text);
+                        
+
+                    }
+
+
+                    if (Opcion == "N")
+
+                    { }
+                
+            }
+
+
+
+
+
+
+
+            file.Close();
+
+        }
+        public static void Listado (string filepath)
+        {
+            using(StreamReader file = new StreamReader(filepath, false))
+            
+            {
+                string text = File.ReadAllText(filepath);
+                Console.WriteLine(text);
+                
+                
+
+            }
+        }
+    }
+}
